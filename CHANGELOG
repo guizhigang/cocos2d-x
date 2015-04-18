@@ -196,8 +196,6 @@ cocos2d-x-3.3-rc1  Nov.29 2014
     [FIX]           GLProgramCache: doesn't release old program with the same key before adding a new one
     [FIX]           GLProgramState: enabled GLProgramState restoring on render recreated on WP8
     [FIX]           Label: label shifting when outline feature enabled
-<<<<<<< HEAD
-=======
     [FIX]           Label: when applying additionalKerning to a Label that displays a string with only 1 character, the character is shifted
     [FIX]           Label: display incompletely with multiline text with outline feature enabled
     [FIX]           Label: crash if using BMFont but missing corresponding png file
@@ -207,7 +205,6 @@ cocos2d-x-3.3-rc1  Nov.29 2014
     [FIX]           Scale9Sprite: will be flipped if both flipX and flipY are false
     [FIX]           Scale9Sprite: if scale and flip property are set at the same time, the result would be wrong
     [FIX]           Scene: setScale() doesn't work as expected
->>>>>>> 425b2b62e139fbd8f7579927b6b76f5bdc11a882
     [FIX]           Sprite3D: did not create attached sprite from cache
     [FIX]           Tests: Sprite Performance Test automation works as expected
     [FIX]           UI: Text: invoke ignoreContentAdatpSize(false) will cause wrong effect
