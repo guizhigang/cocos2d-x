@@ -1,5 +1,5 @@
-#ifndef __LUA_TEMPLATE_DEFAULT_FRAMEWORKS_RUNTIME_SRC_CLASSES_LUA_MODULE_REGISTER_H__
-#define __LUA_TEMPLATE_DEFAULT_FRAMEWORKS_RUNTIME_SRC_CLASSES_LUA_MODULE_REGISTER_H__
+#ifndef __LUA_TEMPLATE_RUNTIME_FRAMEWORKS_RUNTIME_SRC_CLASSES_LUA_MODULE_REGISTER_H__
+#define __LUA_TEMPLATE_RUNTIME_FRAMEWORKS_RUNTIME_SRC_CLASSES_LUA_MODULE_REGISTER_H__
 
 #include "cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h"
 #include "network/lua_cocos2dx_network_manual.h"
@@ -10,7 +10,6 @@
 #include "spine/lua_cocos2dx_spine_manual.hpp"
 #include "3d/lua_cocos2dx_3d_manual.h"
 #include "audioengine/lua_cocos2dx_audioengine_manual.h"
-#include "lua/quick/lua_cocos2dx_quick_manual.hpp"
 
 int lua_module_register(lua_State* L)
 {
@@ -27,5 +26,5 @@ int lua_module_register(lua_State* L)
     return 1;
 }
 
-#endif  // __LUA_TEMPLATE_DEFAULT_FRAMEWORKS_RUNTIME_SRC_CLASSES_LUA_MODULE_REGISTER_H__
+#endif  // __LUA_TEMPLATE_RUNTIME_FRAMEWORKS_RUNTIME_SRC_CLASSES_LUA_MODULE_REGISTER_H__
 

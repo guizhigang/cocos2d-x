@@ -12,6 +12,11 @@
 
 
 --------------------------------------------------------
+-- the cc Sprite3DCache
+-- @field [parent=#cc] Sprite3DCache#Sprite3DCache Sprite3DCache preloaded module
+
+
+--------------------------------------------------------
 -- the cc Mesh
 -- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
 
@@ -34,6 +39,21 @@
 --------------------------------------------------------
 -- the cc BillBoard
 -- @field [parent=#cc] BillBoard#BillBoard BillBoard preloaded module
+
+
+--------------------------------------------------------
+-- the cc TextureCube
+-- @field [parent=#cc] TextureCube#TextureCube TextureCube preloaded module
+
+
+--------------------------------------------------------
+-- the cc Skybox
+-- @field [parent=#cc] Skybox#Skybox Skybox preloaded module
+
+
+--------------------------------------------------------
+-- the cc Terrain
+-- @field [parent=#cc] Terrain#Terrain Terrain preloaded module
 
 
 return nil

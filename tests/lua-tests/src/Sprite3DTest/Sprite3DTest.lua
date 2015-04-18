@@ -326,8 +326,9 @@ function Animate3DTest:addSprite3D()
     self._moveAction:retain()
 
     local function reachEndCallBack()
+        local winSize = cc.Director:getInstance():getWinSize()
         self._sprite:stopActionByTag(100)
-        local inverse = self._moveAction:reverse()
+        local inverse = cc.MoveTo:create(4.0, cc.p(winSize.width - self._sprite:getPositionX(), winSize.height / 2.0))
         inverse:retain()
         self._moveAction:release()
         self._moveAction = inverse
@@ -840,8 +841,9 @@ function Sprite3DWithOBBPerfromanceTest:addNewSpriteWithCoords(vec2)
     self._moveAction = cc.MoveTo:create(4.0, cc.p(s.width / 5.0, s.height / 2.0))
     self._moveAction:retain()
     local function reachEndCallBack()
+    local s = cc.Director:getInstance():getWinSize()
         self._sprite:stopActionByTag(100)
-        local inverse = self._moveAction:reverse()
+        local inverse = cc.MoveTo:create(4.0, cc.p(s.width - self._sprite:getPositionX(), s.height / 2.0))
         inverse:retain()
         self._moveAction:release()
         self._moveAction = inverse
@@ -919,10 +921,256 @@ function Sprite3DMirrorTest.create()
     return layer
 end
 
+
+----------------------------------------
+----AsyncLoadSprite3DTest
+----------------------------------------
+local AsyncLoadSprite3DTest = class("AsyncLoadSprite3DTest", function ()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    return layer
+end)
+
+function AsyncLoadSprite3DTest:ctor()
+    -- body
+    self:init()
+end
+
+function AsyncLoadSprite3DTest:init()
+    Helper.titleLabel:setString(self:title())
+    Helper.subtitleLabel:setString(self:subtitle())
+
+    self:registerScriptHandler(function (event)
+        if event == "enter" then
+            self:onEnter()
+        elseif event == "exit" then
+            self:onExit()
+        end
+    end)
+end
+
+function AsyncLoadSprite3DTest:title()
+    return "Testing Sprite3D:createAsync"
+end
+
+function AsyncLoadSprite3DTest:subtitle()
+    return ""
+end
+
+function AsyncLoadSprite3DTest:onEnter()
+
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/arial.ttf"
+    ttfConfig.fontSize = 15
+
+    local paths = {"Sprite3DTest/boss.obj", "Sprite3DTest/girl.c3b", "Sprite3DTest/orc.c3b", "Sprite3DTest/ReskinGirl.c3b", "Sprite3DTest/axe.c3b"}
+
+    local label1 = cc.Label:createWithTTF(ttfConfig,"AsyncLoad Sprite3D")
+    local item1 = cc.MenuItemLabel:create(label1)
+
+    function menuCallback_asyncLoadSprite(tag, sender)
+        --Note that you must stop the tasks before leaving the scene.
+        cc.AsyncTaskPool:getInstance():stopTasks(cc.AsyncTaskPool.TaskType.TASK_IO)
+    
+        local node = self:getChildByTag(101)
+        --remove all loaded sprite
+        node:removeAllChildren()
+    
+        --remove cache data
+        cc.Sprite3DCache:getInstance():removeAllSprite3DData()
+
+        local function callback(sprite, index)
+            local node = self:getChildByTag(101)
+            local s = cc.Director:getInstance():getWinSize()
+            local width = s.width / (#paths)
+            local point = cc.p(width * (0.5 + index), s.height / 2.0)
+            sprite:setPosition(point)
+            node:addChild(sprite)
+        end
+
+        cc.Sprite3D:createAsync(paths[1], function(sprite)
+            callback(sprite, 0)
+        end)
+
+        cc.Sprite3D:createAsync(paths[2], function(sprite)
+            callback(sprite, 1)
+        end)
+
+        cc.Sprite3D:createAsync(paths[3], function(sprite)
+            callback(sprite, 2)
+        end)
+
+        cc.Sprite3D:createAsync(paths[4], function(sprite)
+            callback(sprite, 3)
+        end)
+
+        cc.Sprite3D:createAsync(paths[5], function(sprite)
+            callback(sprite, 4)
+        end)
+    end
+    item1:registerScriptTapHandler(menuCallback_asyncLoadSprite)
+    
+    local s = cc.Director:getInstance():getWinSize()
+    item1:setPosition( s.width * 0.5, s.height * 0.8)
+    
+    local menu = cc.Menu:create(item1)
+    menu:setPosition(cc.p(0,0))
+    self:addChild(menu, 10)
+    
+    local node = cc.Node:create()
+    node:setTag(101)
+    self:addChild(node)
+    
+    menuCallback_asyncLoadSprite()
+end
+
+function AsyncLoadSprite3DTest:onExit()
+end
+
+----------------------------------------
+----Sprite3DCubeTexture
+----------------------------------------
+local Sprite3DCubeMapTest = class("Sprite3DCubeMapTest", function ()
+    local layer = cc.Layer:create()
+    return layer
+end)
+
+function Sprite3DCubeMapTest:ctor()
+    -- body
+    self:init()
+    self._textureCube = nil
+    self._skyBox = nil
+    self._teapot = nil
+end
+
+function Sprite3DCubeMapTest:init()
+    self:registerScriptHandler(function (event)
+        if event == "enter" then
+            self:onEnter()
+        elseif event == "exit" then
+            self:onExit()
+        end
+    end)
+end
+
+function Sprite3DCubeMapTest:title()
+    return "CubeMap & Skybox Test"
+end
+
+function Sprite3DCubeMapTest:subtitle()
+    return ""
+end
+
+function Sprite3DCubeMapTest:onEnter()
+    local s = cc.Director:getInstance():getWinSize()
+    self:addNewSpriteWithCoords(cc.p(s.width / 2, s.height / 2))
+    Helper.initWithLayer(self)
+    Helper.titleLabel:setString(self:title())
+    Helper.subtitleLabel:setString(self:subtitle())
+end
+
+function Sprite3DCubeMapTest:onExit()
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
+        cc.Director:getInstance():getEventDispatcher():removeEventListener(self._backToForegroundListener)
+    end
+end
+
+function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
+    local visibleSize = cc.Director:getInstance():getVisibleSize()
+    local camera = cc.Camera:createPerspective(60, visibleSize.width / visibleSize.height, 0.1, 200)
+    camera:setCameraFlag(cc.CameraFlag.USER1)
+    --create a teapot
+    self._teapot = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
+
+    local shader = cc.GLProgram:createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
+    local state  = cc.GLProgramState:create(shader)
+
+    self._textureCube = cc.TextureCube:create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
+        "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
+        "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg")
+
+    --set texture parameters
+    local tRepeatParams = { magFilter=gl.NEAREST , minFilter=gl.NEAREST , wrapS=gl.MIRRORED_REPEAT  , wrapT=gl.MIRRORED_REPEAT }
+    self._textureCube:setTexParameters(tRepeatParams)
+
+    --pass the texture sampler to our custom shader
+    state:setUniformTexture("u_cubeTex", self._textureCube)
+
+    self._teapot:setGLProgramState(state)
+    self._teapot:setPosition3D(cc.vec3(0, -5, -20))
+    self._teapot:setRotation3D(cc.vec3(-90, 180, 0))
+
+    local rotate_action = cc.RotateBy:create(1.5, cc.vec3(0, 30, 0))
+    self._teapot:runAction(cc.RepeatForever:create(rotate_action))
+
+    --pass mesh's attribute to shader
+
+    local attributeNames = 
+    {
+        "a_position",
+        "a_color",
+        "a_texCoord",
+        "a_texCoord1",
+        "a_texCoord2",
+        "a_texCoord3",
+        "a_normal",
+        "a_blendWeight",
+        "a_blendIndex",
+    }
+
+    local offset = 0
+    local attributeCount = self._teapot:getMesh():getMeshVertexAttribCount()
+    for i = 1, attributeCount do
+        local meshattribute = self._teapot:getMesh():getMeshVertexAttribute(i - 1)
+        state:setVertexAttribPointer(attributeNames[meshattribute.vertexAttrib+1],
+            meshattribute.size,
+            meshattribute.type,
+            false,
+            self._teapot:getMesh():getVertexSizeInBytes(),
+            offset)
+        offset = offset + meshattribute.attribSizeBytes
+    end
+
+    self:addChild(self._teapot)
+    self:addChild(camera)
+
+    self:setCameraMask(2)
+
+    --config skybox
+    self._skyBox = cc.Skybox:create()
+
+    self._skyBox:setTexture(self._textureCube)
+    self:addChild(self._skyBox)
+
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
+        self._backToForegroundListener = cc.EventListenerCustom:create("event_renderer_recreated", function (eventCustom)
+                
+            local state = self._teapot:getGLProgramState()
+            local glProgram = state:getGLProgram()
+            glProgramreset()
+            glProgram:initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
+            glProgram:link()
+            glProgram:updateUniforms()
+
+            self._textureCube:reloadTexture()
+
+            local tRepeatParams = { magFilter=gl.NEAREST , minFilter=gl.NEAREST , wrapS=gl.MIRRORED_REPEAT  , wrapT=gl.MIRRORED_REPEAT }
+            self._textureCube:setTexParameters(tRepeatParams)
+            state:setUniformTexture("u_cubeTex", self._textureCube)
+
+            self._skyBox:reload()
+            self._skyBox:setTexture(self._textureCube)
+        end)
+        cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(self._backToForegroundListener, -1)
+    end
+end
+
 function Sprite3DTest()
     local scene = cc.Scene:create()
 
-    Helper.createFunctionTable = 
+    Helper.createFunctionTable =
     {
         Sprite3DBasicTest.create,
         Sprite3DHitTest.create,
@@ -932,6 +1180,8 @@ function Sprite3DTest()
         Sprite3DReskinTest.create,
         Sprite3DWithOBBPerfromanceTest.create,
         Sprite3DMirrorTest.create,
+        AsyncLoadSprite3DTest.create,
+        Sprite3DCubeMapTest.create,
     }
 
     scene:addChild(Sprite3DBasicTest.create())

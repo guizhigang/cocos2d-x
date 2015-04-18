@@ -5,22 +5,53 @@
 -- @parent_module cc
 
 --------------------------------
--- 
--- @function [parent=#Animate3D] setSpeed 
+-- get & set speed, negative speed means playing reverse 
+-- @function [parent=#Animate3D] getSpeed 
 -- @param self
--- @param #float speed
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- set high quality<br>
+-- The default value is based on Configuration::isHighAnimate3DQuality(). You can configure it in the config.plist. However, you can modify it using the following function<br>
+-- param true: is high quality, false: is low quality.
+-- @function [parent=#Animate3D] setHighQuality 
+-- @param self
+-- @param #bool isHighQuality
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
 -- @function [parent=#Animate3D] setWeight 
 -- @param self
 -- @param #float weight
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
--- get & set speed, negative speed means playing reverse 
--- @function [parent=#Animate3D] getSpeed 
+-- 
+-- @function [parent=#Animate3D] getOriginInterval 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate3D] setSpeed 
+-- @param self
+-- @param #float speed
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
+-- get high quality<br>
+-- is it high quality
+-- @function [parent=#Animate3D] isHighQuality 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- get & set origin interval
+-- @function [parent=#Animate3D] setOriginInterval 
+-- @param self
+-- @param #float interval
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- get & set blend weight, weight must positive
@@ -39,7 +70,7 @@
 -- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
 
 --------------------------------
---  animate transistion time 
+--  get animate transition time between 3d animations 
 -- @function [parent=#Animate3D] getTransitionTime 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -60,10 +91,18 @@
 -- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
         
 --------------------------------
+--  set animate transition time between 3d animations 
+-- @function [parent=#Animate3D] setTransitionTime 
+-- @param self
+-- @param #float transTime
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
 -- 
 -- @function [parent=#Animate3D] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
@@ -81,17 +120,20 @@
 -- 
 -- @function [parent=#Animate3D] stop 
 -- @param self
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
 -- @function [parent=#Animate3D] update 
 -- @param self
 -- @param #float t
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
 -- @function [parent=#Animate3D] step 
 -- @param self
 -- @param #float dt
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 return nil

@@ -16,6 +16,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
 ../../Classes/ActionsProgressTest/ActionsProgressTest.cpp \
 ../../Classes/ActionsTest/ActionsTest.cpp \
+../../Classes/AllocatorTest/AllocatorTest.cpp \
 ../../Classes/BillBoardTest/BillBoardTest.cpp \
 ../../Classes/Box2DTest/Box2dTest.cpp \
 ../../Classes/Box2DTestBed/Box2dView.cpp \
@@ -116,6 +117,9 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UITest/CocoStudioGUITest/CustomWidget/CustomReader.cpp \
 ../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp \
+../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNode.cpp \
+../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNodeReader.cpp \
+../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.cpp \
 ../../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
 ../../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp \
 ../../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp \
@@ -149,9 +153,12 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/NodeTest/NodeTest.cpp \
 ../../Classes/ParallaxTest/ParallaxTest.cpp \
 ../../Classes/ParticleTest/ParticleTest.cpp \
+../../Classes/Particle3DTest/Particle3DTest.cpp \
+../../Classes/CocosStudio3DTest/CocosStudio3DTest.cpp \
 ../../Classes/PerformanceTest/PerformanceAllocTest.cpp \
 ../../Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
 ../../Classes/PerformanceTest/PerformanceParticleTest.cpp \
+../../Classes/PerformanceTest/PerformanceParticle3DTest.cpp \
 ../../Classes/PerformanceTest/PerformanceSpriteTest.cpp \
 ../../Classes/PerformanceTest/PerformanceTest.cpp \
 ../../Classes/PerformanceTest/PerformanceTextureTest.cpp \
@@ -162,6 +169,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/PerformanceTest/PerformanceEventDispatcherTest.cpp \
 ../../Classes/PerformanceTest/PerformanceScenarioTest.cpp \
 ../../Classes/PerformanceTest/PerformanceCallbackTest.cpp \
+../../Classes/PerformanceTest/PerformanceMathTest.cpp \
 ../../Classes/PhysicsTest/PhysicsTest.cpp \
 ../../Classes/ReleasePoolTest/ReleasePoolTest.cpp \
 ../../Classes/RenderTextureTest/RenderTextureTest.cpp \
@@ -189,7 +197,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UITest/UITest.cpp \
 ../../Classes/UserDefaultTest/UserDefaultTest.cpp \
 ../../Classes/OpenURLTest/OpenURLTest.cpp \
-../../Classes/ZwoptexTest/ZwoptexTest.cpp
+../../Classes/ZwoptexTest/ZwoptexTest.cpp \
+../../Classes/TerrainTest/TerrainTest.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
                     $(LOCAL_PATH)/../../../..

@@ -288,13 +288,13 @@ Sprite* TMXLayer::reusedTileWithRect(Rect rect)
     else
     {
         // FIXME: HACK: Needed because if "batch node" is nil,
-		// then the Sprite'squad will be reset
+        // then the Sprite'squad will be reset
         _reusedTile->setBatchNode(nullptr);
         
-		// Re-init the sprite
+        // Re-init the sprite
         _reusedTile->setTextureRect(rect, false, rect.size);
         
-		// restore the batch node
+        // restore the batch node
         _reusedTile->setBatchNode(this);
     }
 
@@ -621,7 +621,7 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
     case TMXOrientationStaggered:
         {
             float diffX = 0;
-            if ((int)abs(pos.y) % 2 == 1)
+            if ((int)std::abs(pos.y) % 2 == 1)
             {
                 diffX = _mapTileSize.width/2;
             }
@@ -732,4 +732,3 @@ std::string TMXLayer::getDescription() const
 
 
 NS_CC_END
-
